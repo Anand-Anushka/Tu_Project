@@ -1,0 +1,60 @@
+subject_id,subject_name,subject_seq,chapter_id,chpater_name,chapter_seq,goal_id,goal_name,goal_seq,tu_id,tu_name,mapping_type
+1,Physics,5,11,Work,2,1,s,1,1,bhh,in-syllabus
+1,Physics,5,11,Work,2,2,sbjs,2,2,"nwfes,n",out-syllabus
+1,Physics,5,11,Work,2,3,zb b,3,3,mbwvnv,in-syllabus
+1,Physics,5,11,Work,2,4,s,4,4,"canbf,a;",in-syllabus
+1,Physics,5,11,Work,2,5,sbjs,5,5,jk,in-syllabus
+1,Physics,5,11,Work,2,6,zb b,6,6,bhh,in-syllabus
+1,Physics,5,11,Work,2,7,s,7,7,"nwfes,n",in-syllabus
+1,Physics,5,11,Work,2,8,sbjs,8,8,mbwvnv,out-syllabus
+1,Physics,5,11,Work,2,9,zb b,9,9,"canbf,a;",out-syllabus
+1,Physics,5,12,Force,1,10,s,10,10,jk,out-syllabus
+1,Physics,5,12,Force,1,11,sbjs,11,11,bhh,out-syllabus
+1,Physics,5,12,Force,1,12,zb b,12,12,"nwfes,n",out-syllabus
+1,Physics,5,12,Force,1,13,s,13,13,mbwvnv,in-syllabus
+1,Physics,5,12,Force,1,14,s,14,14,"canbf,a;",out-syllabus
+1,Physics,5,12,Force,1,15,sbjs,15,15,jk,in-syllabus
+1,Physics,5,12,Force,1,16,zb b,16,16,bhh,out-syllabus
+1,Physics,5,12,Force,1,17,s,17,17,"nwfes,n",in-syllabus
+1,Physics,5,12,Force,1,18,sbjs,18,18,mbwvnv,out-syllabus
+1,Physics,5,12,Force,1,19,zb b,19,19,"canbf,a;",in-syllabus
+2,Chemistry,6,7,Solid state,5,20,s,20,20,jk,in-syllabus
+2,Chemistry,6,7,Solid state,5,21,sbjs,21,21,bhh,out-syllabus
+2,Chemistry,6,7,Solid state,5,22,zb b,22,22,"nwfes,n",in-syllabus
+2,Chemistry,6,7,Solid state,5,23,s,23,23,mbwvnv,out-syllabus
+2,Chemistry,6,7,Solid state,5,24,sbjs,24,24,"canbf,a;",in-syllabus
+2,Chemistry,6,7,Solid state,5,25,zb b,25,25,jk,out-syllabus
+2,Chemistry,6,7,Solid state,5,26,s,26,26,bhh,in-syllabus
+2,Chemistry,6,7,Solid state,5,27,s,27,27,"nwfes,n",in-syllabus
+2,Chemistry,6,7,Solid state,5,28,sbjs,28,28,mbwvnv,out-syllabus
+2,Chemistry,6,7,Solid state,5,29,zb b,29,29,"canbf,a;",in-syllabus
+2,Chemistry,6,8,Thermo,10,30,s,30,30,jk,out-syllabus
+2,Chemistry,6,8,Thermo,10,31,sbjs,31,31,bhh,in-syllabus
+2,Chemistry,6,8,Thermo,10,32,zb b,32,32,"nwfes,n",out-syllabus
+2,Chemistry,6,8,Thermo,10,33,s,33,33,mbwvnv,in-syllabus
+2,Chemistry,6,8,Thermo,10,34,sbjs,34,34,"canbf,a;",in-syllabus
+2,Chemistry,6,8,Thermo,10,35,zb b,35,35,jk,out-syllabus
+2,Chemistry,6,8,Thermo,10,36,s,36,36,bhh,in-syllabus
+2,Chemistry,6,8,Thermo,10,37,s,37,37,"nwfes,n",out-syllabus
+2,Chemistry,6,8,Thermo,10,38,sbjs,38,38,mbwvnv,in-syllabus
+2,Chemistry,6,8,Thermo,10,39,zb b,39,39,"canbf,a;",out-syllabus
+3,Maths,4,32,Quadratic Equation,9,40,s,40,40,jk,in-syllabus
+3,Maths,4,32,Quadratic Equation,9,41,sbjs,41,41,bhh,in-syllabus
+3,Maths,4,32,Quadratic Equation,9,42,zb b,42,42,"nwfes,n",out-syllabus
+3,Maths,4,32,Quadratic Equation,9,43,s,43,43,mbwvnv,in-syllabus
+3,Maths,4,32,Quadratic Equation,9,44,sbjs,44,44,"canbf,a;",out-syllabus
+3,Maths,4,32,Quadratic Equation,9,45,zb b,45,45,jk,in-syllabus
+3,Maths,4,32,Quadratic Equation,9,46,s,46,46,bhh,out-syllabus
+3,Maths,4,32,Quadratic Equation,9,47,sbjs,47,47,"nwfes,n",in-syllabus
+3,Maths,4,32,Quadratic Equation,9,48,zb b,48,48,mbwvnv,in-syllabus
+3,Maths,4,32,Quadratic Equation,9,49,s,49,49,"canbf,a;",out-syllabus
+3,Maths,4,31,Linear Equation,8,50,s,50,50,jk,in-syllabus
+3,Maths,4,31,Linear Equation,8,51,sbjs,51,51,bhh,out-syllabus
+3,Maths,4,31,Linear Equation,8,52,zb b,52,52,"nwfes,n",in-syllabus
+3,Maths,4,31,Linear Equation,8,53,s,53,53,mbwvnv,out-syllabus
+3,Maths,4,31,Linear Equation,8,54,sbjs,54,54,"canbf,a;",in-syllabus
+3,Maths,4,31,Linear Equation,8,55,zb b,55,55,jk,in-syllabus
+3,Maths,4,31,Linear Equation,8,56,s,56,56,bhh,out-syllabus
+3,Maths,4,31,Linear Equation,8,57,sbjs,57,57,"nwfes,n",in-syllabus
+3,Maths,4,31,Linear Equation,8,58,zb b,58,58,mbwvnv,out-syllabus
+3,Maths,4,31,Linear Equation,8,59,s,59,59,"canbf,a;",in-syllabus
