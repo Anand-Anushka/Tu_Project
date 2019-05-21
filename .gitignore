@@ -3,3 +3,4 @@
 *.pyc
 db.sqlite3
 *.cpython-37.pyc
+*/__pycache__/*
