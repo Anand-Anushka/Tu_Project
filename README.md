@@ -1,2 +1,2 @@
 # Tu_Project
-Whatever
+Basic Template 
