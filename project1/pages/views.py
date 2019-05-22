@@ -35,6 +35,7 @@ def simple_upload(request):
 	return render(request, 'simple_upload.html')
 
 def map(request):
+	import pdb; pdb.set_trace()
 	mapping = pd.read_csv('./media/test.csv')
 	video = pd.read_csv('./media/tu_video.csv')
 	qus = pd.read_csv('./media/tu_lo.csv')
@@ -47,7 +48,7 @@ def map(request):
              .rename(columns={0:'id'})
              .to_json(orient='records')) 
 
-	return render(request, 'map.html')
+	return render(request, 'map.html',{'foo':j})
 
 
 # def upload(request):
