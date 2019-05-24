@@ -8,6 +8,12 @@ from django.contrib import messages
 # from .models import mapping, tu_video, tu_lo
 from django.db import models
 from django.http import HttpResponse
+from django.http import JsonResponse
+from django.views.generic.edit import FormView
+from .forms import DocumentForm
+from django.forms import modelformset_factory
+from .models import Document
+# from django_cleanup import cleanup
 
 # from .forms import UploadFileForm
 # from somewhere import handle_uploaded_file
@@ -15,40 +21,76 @@ from django.http import HttpResponse
 def home(request):
 	return render(request,'home.html',{})
 
-def about(request):
-	return render(request,'about.html',{})
 
 
-
-def simple_upload(request):
+def upload_file(request):
 	
-	if request.method == 'POST' and request.FILES['myfile']:
-		
-		myfile = request.FILES['myfile']
-		fs = FileSystemStorage()
-		filename = fs.save(myfile.name, myfile)
-		uploaded_file_url1 = fs.url(filename)
-		return render(request, 'simple_upload.html', {
-            'uploaded_file_url1': uploaded_file_url1
-        })
+	DocumentFormSet = modelformset_factory(Document,fields=('document',), extra = 3)
+	#formset = DocumentFormSet(queryset=Document.objects.none())
+	print(request.method)
+	if request.method=='POST':
+		f = DocumentFormSet(request.POST, request.FILES)
+		print(f)
+		f.save()
+	else:
+		f = DocumentFormSet(queryset=Document.objects.none())
 
-	return render(request, 'simple_upload.html')
+	return render(request,'simple_upload.html',{'format':f})
 
-def map(request):
-	import pdb; pdb.set_trace()
+
+
+
+
+def subject(request):
+	mapping = pd.read_csv('./media/mapping.csv')
+	video = pd.read_csv('./media/tu_video.csv')
+	qus = pd.read_csv('./media/tu_lo.csv')
+	merge1 = pd.merge(mapping,video, on='tu_id')
+	merge2 = pd.merge(merge1,qus, on='tu_id')
+
+	j = (merge2.groupby(['subject_id','subject_name','chapter_id','chpater_name','goal_id','goal_name','tu_id','tu_name',], as_index=False)
+         .apply(lambda x: x[['video_id','video_name','yt_link','lo_id','lo_q_link']].to_dict('r'))
+         .reset_index()
+         .rename(columns={0:'id'}))
+         # .to_json(orient='records')) 
+# preformattedJson = JSON.stringify(j, null, 2)
+	# return render(request,'subject.html',{})
+	return render(request,'subject.html',{'map':j.to_json})
+
+
+
+
+
+
+
+def chapter(request):
 	mapping = pd.read_csv('./media/test.csv')
 	video = pd.read_csv('./media/tu_video.csv')
 	qus = pd.read_csv('./media/tu_lo.csv')
 	merge1 = pd.merge(mapping,video, on='tu_id')
 	merge2 = pd.merge(merge1,qus, on='tu_id')
-	
-	j = (merge2.groupby(['subject_id','subject_name','chapter_id','chpater_name','goal_id','goal_name','tu_id','tu_name',], as_index=False)
-             .apply(lambda x: x[['video_id','video_name','yt_link','lo_id','lo_q_link']].to_dict('r'))
-             .reset_index()
-             .rename(columns={0:'id'})
-             .to_json(orient='records')) 
 
-	return render(request, 'map.html',{'foo':j})
+	j = (merge2.groupby(['subject_id','subject_name','chapter_id','chpater_name','goal_id','goal_name','tu_id','tu_name',], as_index=False)
+         .apply(lambda x: x[['video_id','video_name','yt_link','lo_id','lo_q_link']].to_dict('r'))
+         .reset_index()
+         .rename(columns={0:'id'}))
+
+# preformattedJson = JSON.stringify(j, null, 2)
+	return render(request,'chapter.html')
+
+
+
+
+
+
+
+def goal(request):
+	return render(request,'goal.html',{})
+
+
+
+def question(request):
+	return render(request,'question.html',{})
 
 
 # def upload(request):

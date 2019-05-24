@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-<h2>Upload mapping file</h2>
+<!-- <h2>Upload mapping file</h2>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="file" name="myfile">
@@ -15,6 +15,49 @@
   {% endif %}
 
   <p><a href="{% url 'home' %}">Return to home</a></p>
-  <hr size=10>
+  <hr size=10> -->
+
+
+<!DOCTYPE html>
+<style>
+	#example1{
+  	padding: 15px;
+  	background: lightblue;
+  	background-clip: border-box;  
+	}
+
+	.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+
+</style>
+
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <title>TU_QA</title> 
+</head> 
+<body> 
+	<div id = example1>
+		<h4>Upload "mapping.csv", "tu_video.csv" & "tu_lo.csv"</h4>
+    	<form method = "POST" enctype="multipart/form-data"> 	
+        	{% csrf_token %} 
+        	{{ format.as_p }} 
+        	<button type="submit">Upload</button> 
+    	</form>
+    </div> 
+</body> 
+</html> 
+
 
 {% endblock %}
