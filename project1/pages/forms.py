@@ -1,5 +1,10 @@
-from django import forms
+# from django import forms
+from .models import Document
+from django.forms import ModelForm, modelformset_factory
+  
+class DocumentForm(ModelForm): 
+	class Meta: 
+		model = Document
+		fields = ['document']
 
-class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    file = forms.FileField()
+# DocumentFormSet = modelformset_factory(Document, form=DocumentForm, max_num=2)

@@ -1,6 +1,9 @@
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+import os
+
+
 
 # class mapping(models.Model):
 # 	subject_id = models.PositiveIntegerField()
@@ -29,17 +32,16 @@ from django.conf import settings
 # 	lo_q_link = models.URLField(max_length=300)
 
 class OverwriteStorage(FileSystemStorage):
-    '''
-    Muda o comportamento padrão do Django e o faz sobrescrever arquivos de
-    mesmo nome que foram carregados pelo usuário ao invés de renomeá-los.
-    '''
-    def get_available_name(self, name):
+
+    def get_available_name(self, name,max_length=None):
         if self.exists(name):
-            os.remove(os.path.join(settings.MEDIA_ROOT, "media"))
+            os.remove(os.path.join(settings.MEDIA_ROOT, name))
         return name
 
 
 class Document(models.Model):
-    description = models.CharField(max_length=255, blank=True)
-    document = models.FileField(upload_to='documents/',storage = OverwriteStorage())
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+	# title = models.CharField(max_length=100)
+	document = models.FileField(storage=OverwriteStorage())
+
+def document_path(instance, filename):
+    return os.path.join('./media/documnent', str(instance.some_identifier), 'filename.ext')
