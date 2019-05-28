@@ -23,16 +23,15 @@ $(document).ready(function(){
 
 	function craeteEverything(){
 		var subs = JSON.parse($(".subject-container").attr("data-values"));
-		console.log(subs)
+		console.log(subs);
 
-		setupSubjectList(subs)
+		setupSubjectList(subs);
 		// setUpGoalPage(subs)
 	}
 
 	function setupSubjectList(alldata) {
 
-		subjectListPage.html("")
-		// console.log(alldata)
+		subjectListPage.html("");
 
 		for (var i = 0; i < Object.keys(alldata).length; i++) {
 			
@@ -88,11 +87,7 @@ $(document).ready(function(){
 	}
 
 	function setupGoalList(chapter_div){
-
 		var goaldata = JSON.parse(chapter_div.attr("data-value"));
-
-		
-
 		for(var i = 0; i < goaldata.length; i++){
 			var element = 	$('<div/>', {
 			    "class": 'goal',
@@ -100,20 +95,18 @@ $(document).ready(function(){
 			}).append(
 				$('<div/>', {
 				    "class": 'goal-title all-titles',
-				    html : goaldata[i]["goal_name"], //.click(function(){setUpGoalPage(alldata[Object.keys(alldata)[i]].chapter_details)})
+				    html :  "<span class='goal-index'> Goal "+(i+1)+"</span>" + "<span class='goal-name'>" + goaldata[i]["goal_name"]+"</span>"
+				})
+			).append(
+				$('<div/>', {
+				    "class": 'question-list-container',
+				    html: "<div class='container-title'>Questions</div>"
 				})
 			);
 
-
 			element.appendTo(goalListPage);
 			setuptuList(element);
-
-			// element.on("click", function(){
-			// 	setuptuList($(this));//.attr("data-value"))
-			// });
-
 		}
-
 		subjects.css("display", "none");
 		chapters.css("display", "none");
 		goalListPage.css("display", "block");
@@ -122,35 +115,28 @@ $(document).ready(function(){
 	function setuptuList(goal_div){
 
 		var tudata = JSON.parse(goal_div.attr("data-value"));
-
-		// console.log(tudata)
-
 		tuListPage.html("");
 
 		for(var i = 0; i<tudata.length; i++){
-			// console.log(tudata[i]["video_details"], tudata[i]["lo_details"])
-			// console.log(tudata[i]["lo_details"])
+
 			var element = 	$('<div/>', {
 			    "class": 'tu',
 			    "data-value": JSON.stringify(tudata[i])
 			}).append(
 				$('<div/>', {
 				    "class": 'tu-title',
-				    html : tudata[i]["tu_name"], //.click(function(){setUpGoalPage(alldata[Object.keys(alldata)[i]].chapter_details)})
+				    html :  "<span class='tu-index'> TU "+(i+1)+"</span>" + "<span class='tu-name'>" + tudata[i]["tu_name"]+"</span>", //.click(function(){setUpGoalPage(alldata[Object.keys(alldata)[i]].chapter_details)})
+				})
+			).append(
+				$('<div/>', {
+				    "class": 'video-list-container'
 				})
 			);
 
 			element.appendTo(goal_div);
-			setupVideoList(goal_div);
-
-			// element.on("click", function(){
-			// 	setupVideoList($(this));//.attr("data-value"))
-			// }); 
-
-
 		}
 
-		// console.log(JSON.parse($(".tulist-container").attr("data-value")))
+		setupVideoList(goal_div);
 
 		subjects.css("display", "none");
 		chapters.css("display", "none");
@@ -161,55 +147,47 @@ $(document).ready(function(){
 	function setupVideoList(goal_div){
 
 		var vldata = JSON.parse(goal_div.find(".tu").attr("data-value"));
-
-
-		console.log(vldata)
-		
-		console.log(vldata["video_details"].length)
+		// console.log(vldata["video_details"].length)
 
 		video_qListPage.html("");
-
-		for(var i=0; i<vldata["video_details"].length; i++){
+		for(var i=0; i < vldata["video_details"].length; i++){
 
 			video_id = YouTubeGetID(vldata["video_details"][i]["video_link"])
-
-			// console.log(tudata[i]["video_details"], tudata[i]["lo_details"])
 			var element = 	$('<div/>', {
 			    "class": 'video-box',
-			    
 			})
 
 			element.append($('<img/>',{
 				"class": 'video-thumbnail',
 				"src" : 'https://img.youtube.com/vi/'+ video_id +'/hqdefault.jpg',
-
 			}))
+
 			element.append($('<div/>',{
 				"class": 'video-title',
 				html: vldata["video_details"][i]["video_name"]
 
 			}))
 
+			element.appendTo(goal_div.find(".video-list-container"));
+		}
+
+		for(var i=0; i < vldata["lo_details"].length; i++){
+
 			var element2 = $('<div/>', {
 			    "class": 'questions',
-			    html : vldata["lo_details"][i]["lo_name"] + "  " +  vldata["lo_details"][i]["lo_q_link"],
-			})
-			// .append(
-			// 	$('<div/>', {
-			// 	    "class": 'tu-title',
-			// 	    html : tudata[i]["tu_name"], //.click(function(){setUpGoalPage(alldata[Object.keys(alldata)[i]].chapter_details)})
-			// 	})
-			// );
-
-			element.appendTo(goal_div);
-			element2.appendTo(goal_div);
-
-			// element.on("click", function(){
-			// 	setupVideoList($(this));//.attr("data-value"))
-			// }); 
-
-
+			    html : "<span class='lo-index'> LO"+(i+1)+"</span>"
+			}).append(
+				$("<a>", {
+					href : vldata["lo_details"][i]["lo_q_link"],
+					class : "lo-name",
+					html : vldata["lo_details"][i]["lo_name"],
+					target : "_blank"
+				})
+			);
+			element2.appendTo(goal_div.find(".question-list-container"));
 		}
+
+
 		subjects.css("display", "none");
 		chapters.css("display", "none");
 		goalListPage.css("display", "block");
@@ -229,9 +207,6 @@ $(document).ready(function(){
   		}
     	return ID;
 	}
-
-
-
 
 	craeteEverything();
 	gohome();
