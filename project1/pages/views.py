@@ -55,7 +55,7 @@ def subject(request):
 	# import pdb; pdb.set_trace()
 
 	for i in set(list(data["lo_id"])):
-		lo_dict[i] = {"lo_id":i,"lo_q_link":list(data[data["lo_id"]==i]["lo_q_link"])}
+		lo_dict[i] = {"lo_id":i,"lo_name":(str(set(data[data["lo_id"]==i]["lo_name"])).replace("{'","")).replace("'}",""),"lo_q_link":(str(set(list(data[data["lo_id"]==i]["lo_q_link"]))).replace("{'","")).replace("'}","")}
 
 	for j in set(list(data["video_id"])):
 		video_dict[j] = {"video_id":j,"video_name":(str(set(data[data["video_id"]==j]["video_name"])).replace("{'","")).replace("'}",""),"video_link":(str(set(data[data["video_id"]==j]["yt_link"])).replace("{'","")).replace("'}","")}

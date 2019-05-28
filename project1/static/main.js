@@ -161,6 +161,8 @@ $(document).ready(function(){
 	function setupVideoList(goal_div){
 
 		var vldata = JSON.parse(goal_div.find(".tu").attr("data-value"));
+
+
 		console.log(vldata)
 		
 		console.log(vldata["video_details"].length)
@@ -168,11 +170,29 @@ $(document).ready(function(){
 		video_qListPage.html("");
 
 		for(var i=0; i<vldata["video_details"].length; i++){
+
+			video_id = YouTubeGetID(vldata["video_details"][i]["video_link"])
+
 			// console.log(tudata[i]["video_details"], tudata[i]["lo_details"])
-			// console.log(tudata[i]["lo_details"])
 			var element = 	$('<div/>', {
-			    "class": 'video',
-			    html : vldata["video_details"][i]["video_name"] + "  " +  vldata["video_details"][i]["video_link"],
+			    "class": 'video_class',
+			    
+			})
+
+			element.append($('<img/>',{
+				"class": 'video_image',
+				"src" : 'https://img.youtube.com/vi/'+ video_id +'/hqdefault.jpg',
+
+			}))
+			element.append($('<div/>',{
+				"class": 'video_title',
+				html: vldata["video_details"][i]["video_name"]
+
+			}))
+
+			var element2 = $('<div/>', {
+			    "class": 'questions',
+			    html : vldata["lo_details"][i]["lo_name"] + "  " +  vldata["lo_details"][i]["lo_q_link"],
 			})
 			// .append(
 			// 	$('<div/>', {
@@ -182,6 +202,7 @@ $(document).ready(function(){
 			// );
 
 			element.appendTo(goal_div);
+			element2.appendTo(goal_div);
 
 			// element.on("click", function(){
 			// 	setupVideoList($(this));//.attr("data-value"))
@@ -194,6 +215,19 @@ $(document).ready(function(){
 		goalListPage.css("display", "block");
 		tuListPage.css("display", "none");
 		video_qListPage.css("display","block")
+	}
+
+	function YouTubeGetID(url){
+  		var ID = '';
+  		url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+  		if(url[2] !== undefined) {
+    		ID = url[2].split(/[^0-9a-z_\-]/i);
+    		ID = ID[0];
+  		}
+  		else {
+    		ID = url;
+  		}
+    	return ID;
 	}
 
 
