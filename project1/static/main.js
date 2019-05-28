@@ -39,7 +39,7 @@ $(document).ready(function(){
 				    "data-value": JSON.stringify(subject_data.chapter_details)
 				}).append(
 					$('<div/>', {
-					    "class": 'subject-title all-titles',
+					    "class": 'subject-title',
 					    html : subject_data["subject_name"], //.click(function(){setUpGoalPage(alldata[Object.keys(alldata)[i]].chapter_details)})
 					})
 				);
@@ -66,7 +66,7 @@ $(document).ready(function(){
 			    "data-value": JSON.stringify(subdata[i]["goal_details"])
 			}).append(
 				$('<div/>', {
-				    "class": 'chapter-title all-titles',
+				    "class": 'chapter-title',
 				    html : subdata[i]["chapter_name"], //.click(function(){setUpGoalPage(alldata[Object.keys(alldata)[i]].chapter_details)})
 				})
 			);
@@ -84,8 +84,6 @@ $(document).ready(function(){
 	}
 
 	function setupGoalList(chapter_div){
-
-		goalListPage.html("");
 
 		var goaldata = JSON.parse(chapter_div.attr("data-value"));
 

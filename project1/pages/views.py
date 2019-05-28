@@ -35,7 +35,7 @@ def upload_file(request):
 	else:
 		f = DocumentFormSet(queryset=Document.objects.none())
 
-	return render(request,'simple_upload.html',{'format':f})
+	return render(request,'upload.html',{'format':f})
 
 
 def subject(request):
