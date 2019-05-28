@@ -1,14 +1,53 @@
+*{
+	font-family: 'Open sans';
+}
+
 .all-titles{
-	font-size: 26px;
+	font-size: 24px;
 	font-weight: bold;
 }
+
+.all-hover:hover{
+	box-shadow: 1px 3px 10px #ddd;
+	background-color: #f1f1f1;
+}
+.container-title{
+	float: left;
+	width: 100%;
+	padding: 10px 0 10px 0;
+	margin-bottom: 10px;
+	/* border-bottom: 1px solid #f1f1f1; */
+	font-size: 18px;
+}
+
+
+
+
+
+
 .subject-container{
 	float: left;
 	width: 100%;
 }
-.subject{
+.subject, .chapter{
 	float: left;
-	width: 100%;
-	padding: 20px;
-	cursor: pointer;
+    width: 100%;
+    padding: 20px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.home{
+	float: left;
+    border: 1px solid #ddd;
+    line-height: 20px;
+    padding: 4px 10px;
+    border-radius: 30px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.home:hover{
+	background-color: #ddd;
 }
