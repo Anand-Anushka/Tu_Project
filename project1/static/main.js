@@ -175,17 +175,17 @@ $(document).ready(function(){
 
 			// console.log(tudata[i]["video_details"], tudata[i]["lo_details"])
 			var element = 	$('<div/>', {
-			    "class": 'video_class',
+			    "class": 'video-box',
 			    
 			})
 
 			element.append($('<img/>',{
-				"class": 'video_image',
+				"class": 'video-thumbnail',
 				"src" : 'https://img.youtube.com/vi/'+ video_id +'/hqdefault.jpg',
 
 			}))
 			element.append($('<div/>',{
-				"class": 'video_title',
+				"class": 'video-title',
 				html: vldata["video_details"][i]["video_name"]
 
 			}))
