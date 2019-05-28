@@ -58,7 +58,7 @@ def subject(request):
 		lo_dict[i] = {"lo_id":i,"lo_q_link":list(data[data["lo_id"]==i]["lo_q_link"])}
 
 	for j in set(list(data["video_id"])):
-		video_dict[j] = {"video_id":j,"video_name":(str(set(data[data["video_id"]==j]["video_name"])).replace("{'","")).replace("'}",""),"video_link":data[data["video_id"]==j]["yt_link"].to_string(index=False)}
+		video_dict[j] = {"video_id":j,"video_name":(str(set(data[data["video_id"]==j]["video_name"])).replace("{'","")).replace("'}",""),"video_link":(str(set(data[data["video_id"]==j]["yt_link"])).replace("{'","")).replace("'}","")}
 
 	for k in set(list(data["tu_id"])):
 		tu_dict[k] = {"tu_id":k,"tu_name":(str(set(data[data["tu_id"]==k]["tu_name"])).replace("{'","")).replace("'}",""),"video_details":[video_dict[x] for x in set(list(data[data["tu_id"]==k]["video_id"]))],"lo_details":[lo_dict[x] for x in set(list(data[data["tu_id"]==k]["lo_id"]))]}
