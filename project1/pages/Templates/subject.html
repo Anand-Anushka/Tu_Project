@@ -1,14 +1,22 @@
 {% extends 'base.html'%}
 {% block content %}
 
-<div class="home">Home</div>
-<div class="subject-container" data-values="{{map}}">
-		<div class="subject" data-value="">
-			<div class="subjet-title"></div>	
-		</div>
+<div class="home"><span style="font-size:21px;font-weight:bold;" >&#8962;</span> Home</div>
+
+<div class="subjectlist">
+	<div class="container-title">Subjects</div>
+	<div class="subject-container"  data-values="{{map}}">
+		
+	</div>
+
 </div>
 
-<div class="chapterlist-container"></div>
+<div class="chapterlist" style="display: none;">
+	<div class="container-title">Chapters</div>
+	<div class="chapterlist-container">
+		
+	</div>
+</div>
 <div class="goallist-container"></div>
 <div class="tulist-container"></div>
 <div class="video_qlist-container"></div>

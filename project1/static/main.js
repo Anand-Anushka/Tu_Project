@@ -1,7 +1,11 @@
 $(document).ready(function(){
 	
+	var subjects = $(".subjectlist");
 	var subjectListPage = $(".subject-container");
+
+	var chapters = $(".chapterlist");
 	var chapterListPage = $(".chapterlist-container");
+
 	var goalListPage = $(".goallist-container");
 	var tuListPage = $(".tulist-container");
 	var video_qListPage = $(".video_qlist-container");
@@ -9,8 +13,8 @@ $(document).ready(function(){
 
 	function gohome(){
 		$(".home").on("click", function(){
-			subjectListPage.css("display", "block");
-			chapterListPage.css("display", "none");
+			subjects.css("display", "block");
+			chapters.css("display", "none");
 			goalListPage.css("display", "none");
 			tuListPage.css("display", "none");
 			video_qListPage.css("display","none")
@@ -35,7 +39,7 @@ $(document).ready(function(){
 			var subject_data = alldata[Object.keys(alldata)[i]];
 
 			var element = 	$('<div/>', {
-				    "class": 'subject',
+				    "class": 'subject all-hover',
 				    "data-value": JSON.stringify(subject_data.chapter_details)
 				}).append(
 					$('<div/>', {
@@ -62,7 +66,7 @@ $(document).ready(function(){
 
 		for(i=0; i<subdata.length; i++){
 			var element = 	$('<div/>', {
-			    "class": 'chapter',
+			    "class": 'chapter all-hover',
 			    "data-value": JSON.stringify(subdata[i]["goal_details"])
 			}).append(
 				$('<div/>', {
@@ -79,8 +83,8 @@ $(document).ready(function(){
 			element.appendTo(chapterListPage);
 		}
 
-		subjectListPage.css("display", "none");
-		chapterListPage.css("display", "block");
+		subjects.css("display", "none");
+		chapters.css("display", "block");
 	}
 
 	function setupGoalList(chapter_div){
@@ -110,8 +114,8 @@ $(document).ready(function(){
 
 		}
 
-		subjectListPage.css("display", "none");
-		chapterListPage.css("display", "none");
+		subjects.css("display", "none");
+		chapters.css("display", "none");
 		goalListPage.css("display", "block");
 	}
 
@@ -148,8 +152,8 @@ $(document).ready(function(){
 
 		// console.log(JSON.parse($(".tulist-container").attr("data-value")))
 
-		subjectListPage.css("display", "none");
-		chapterListPage.css("display", "none");
+		subjects.css("display", "none");
+		chapters.css("display", "none");
 		goalListPage.css("display", "block");
 		tuListPage.css("display", "block");
 	}	
@@ -185,8 +189,8 @@ $(document).ready(function(){
 
 
 		}
-		subjectListPage.css("display", "none");
-		chapterListPage.css("display", "none");
+		subjects.css("display", "none");
+		chapters.css("display", "none");
 		goalListPage.css("display", "block");
 		tuListPage.css("display", "none");
 		video_qListPage.css("display","block")
