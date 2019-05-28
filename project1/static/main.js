@@ -162,8 +162,10 @@ $(document).ready(function(){
 				"src" : 'https://img.youtube.com/vi/'+ video_id +'/hqdefault.jpg',
 			}))
 
-			element.append($('<div/>',{
+			element.append($('<a/>',{
 				"class": 'video-title',
+				href: vldata["video_details"][i]["video_link"],
+				target: "_blank",
 				html: vldata["video_details"][i]["video_name"]
 
 			}))
