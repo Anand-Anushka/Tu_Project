@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages',
+    'jquery',
     
 ]
 
@@ -111,11 +112,15 @@ USE_TZ = True
 
 
 
-# STATICFILES_DIRS = [
-#                     os.path.join(BASE_DIR, "static")
-# ]
+STATICFILES_DIRS = [
+                    os.path.join(BASE_DIR, "static")
+]
 STATIC_ROOTS = os.path.join(BASE_DIR, "static")
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
+
+print(STATIC_ROOTS)
+# print(STATIC_URL)
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'

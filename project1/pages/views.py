@@ -13,6 +13,7 @@ from django.views.generic.edit import FormView
 from .forms import DocumentForm
 from django.forms import modelformset_factory
 from .models import Document
+import logging
 # from django_cleanup import cleanup
 
 # from .forms import UploadFileForm
@@ -27,7 +28,6 @@ def upload_file(request):
 	
 	DocumentFormSet = modelformset_factory(Document,fields=('document',), extra = 3)
 	#formset = DocumentFormSet(queryset=Document.objects.none())
-	print(request.method)
 	if request.method=='POST':
 		f = DocumentFormSet(request.POST, request.FILES)
 		print(f)
@@ -38,59 +38,216 @@ def upload_file(request):
 	return render(request,'simple_upload.html',{'format':f})
 
 
-
-
-
 def subject(request):
 	mapping = pd.read_csv('./media/mapping.csv')
 	video = pd.read_csv('./media/tu_video.csv')
 	qus = pd.read_csv('./media/tu_lo.csv')
 	merge1 = pd.merge(mapping,video, on='tu_id')
-	merge2 = pd.merge(merge1,qus, on='tu_id')
+	merge2 = pd.merge(merge1,qus, on='tu_id', how = "left")
+	data = merge2[merge2["mapping_type"]=='in syllabus']
+	lo_dict = dict()
+	video_dict = dict()
+	tu_dict = dict()
+	goal_dict = dict()
+	chapter_dict = dict()
+	subject_dict = dict()
+	
+	# import pdb; pdb.set_trace()
 
-	j = (merge2.groupby(['subject_id','subject_name','chapter_id','chpater_name','goal_id','goal_name','tu_id','tu_name',], as_index=False)
-         .apply(lambda x: x[['video_id','video_name','yt_link','lo_id','lo_q_link']].to_dict('r'))
-         .reset_index()
-         .rename(columns={0:'id'}))
+	for i in set(list(data["lo_id"])):
+		lo_dict[i] = {"lo_id":i,"lo_q_link":list(data[data["lo_id"]==i]["lo_q_link"])}
+
+	for j in set(list(data["video_id"])):
+		video_dict[j] = {"video_id":j,"video_name":(str(set(data[data["video_id"]==j]["video_name"])).replace("{'","")).replace("'}",""),"video_link":data[data["video_id"]==j]["yt_link"].to_string(index=False)}
+
+	for k in set(list(data["tu_id"])):
+		tu_dict[k] = {"tu_id":k,"tu_name":(str(set(data[data["tu_id"]==k]["tu_name"])).replace("{'","")).replace("'}",""),"video_details":[video_dict[x] for x in set(list(data[data["tu_id"]==k]["video_id"]))],"lo_details":[lo_dict[x] for x in set(list(data[data["tu_id"]==k]["lo_id"]))]}
+
+	for l in set(list(data["goal_id"])):
+		goal_dict[l] = {"goal_id":l,"goal_name":(str(set(data[data["goal_id"]==l]["goal_name"])).replace("{'","")).replace("'}",""),"tu_details":[tu_dict[x] for x in set(list(data[data["goal_id"]==l]["tu_id"]))]}
+
+	for m in set(list(data["chapter_id"])):
+		chapter_dict[m] = {"chapter_id":m,"chapter_name":(str(set(data[data["chapter_id"]==m]["chapter_name"])).replace("{'","")).replace("'}",""),"goal_details":[goal_dict[x] for x in set(list(data[data["chapter_id"]==m]["goal_id"]))]}
+
+	for n in set(list(data["subject_name"])):
+		subject_dict[n] = {"subject_name":n,"chapter_details":[chapter_dict[x] for x in set(list(data[data["subject_name"]==n]["chapter_id"]))]}
+
+
+
+	# j = (data.groupby(['subject_id','subject_name','chapter_id','chpater_name','goal_id','goal_name','tu_id','tu_name',], as_index=False)
+ #         .apply(lambda x: x[['video_id','video_name','yt_link','lo_id','lo_q_link']].to_dict('r'))
+ #         .reset_index()
+ #         .rename(columns={0:'id'}))
          # .to_json(orient='records')) 
 # preformattedJson = JSON.stringify(j, null, 2)
 	# return render(request,'subject.html',{})
-	return render(request,'subject.html',{'map':j.to_json})
+
+	j = json.dumps(subject_dict)
+
+	# j_t = json.loads(j)
+	
+
+	return render(request,'subject.html',{"map":j})
+
+
+# def chapter(request,subject_name):
+# 	# import pdb; pdb.set_trace()
+# # preformattedJson = JSON.stringify(j, null, 2)
+
+# 	logging.info(request);
+# 	mapping = pd.read_csv('./media/mapping.csv')
+# 	video = pd.read_csv('./media/tu_video.csv')
+# 	qus = pd.read_csv('./media/tu_lo.csv')
+# 	merge1 = pd.merge(mapping,video, on='tu_id')
+# 	merge2 = pd.merge(merge1,qus, on='tu_id', how = "left")
+# 	data = merge2[merge2["mapping_type"]=='in syllabus']
+# 	# data = data[data["subject_name"]==subject_name]
+# 	lo_dict = dict()
+# 	video_dict = dict()
+# 	tu_dict = dict()
+# 	goal_dict = dict()
+# 	chapter_dict = dict()
+# 	subject_dict = dict()
+	
+# 	# import pdb; pdb.set_trace()
+
+# 	for i in set(list(data["lo_id"])):
+# 		lo_dict[i] = {"lo_id":i,"lo_q_link":list(data[data["lo_id"]==i]["lo_q_link"])}
+
+# 	for j in set(list(data["video_id"])):
+# 		video_dict[j] = {"video_id":j,"video_name":str(set(data[data["video_id"]==j]["video_name"])),"video_link":data[data["video_id"]==j]["yt_link"].to_string(index=False)}
+
+# 	for k in set(list(data["tu_id"])):
+# 		tu_dict[k] = {"tu_id":k,"tu_name":set(data[data["tu_id"]==k]["tu_name"]),"video_details":[video_dict[x] for x in set(list(data[data["tu_id"]==k]["video_id"]))],"lo_details":[lo_dict[x] for x in set(list(data[data["tu_id"]==k]["lo_id"]))]}
+
+# 	for l in set(list(data["goal_id"])):
+# 		goal_dict[l] = {"goal_id":l,"goal_name":str(set(data[data["goal_id"]==l]["goal_name"])),"tu_details":[tu_dict[x] for x in set(list(data[data["goal_id"]==l]["tu_id"]))]}
+
+# 	for m in set(list(data["chapter_id"])):
+# 		chapter_dict[m] = {"chapter_id":m,"chapter_name":str(list(set(data[data["chapter_id"]==m]["chapter_name"]))),"goal_details":[goal_dict[x] for x in set(list(data[data["chapter_id"]==m]["goal_id"]))]}
+
+# 	for n in set(list(data["subject_name"])):
+# 		subject_dict[n] = {"subject_name":n,"chapter_details":[chapter_dict[x] for x in set(list(data[data["subject_name"]==n]["chapter_id"]))]}
+
+
+# 	return render(request,'chapter.html', {"map":subject_dict})
 
 
 
+# def goal(request):
+
+# 	mapping = pd.read_csv('./media/mapping.csv')
+# 	video = pd.read_csv('./media/tu_video.csv')
+# 	qus = pd.read_csv('./media/tu_lo.csv')
+# 	merge1 = pd.merge(mapping,video, on='tu_id')
+# 	merge2 = pd.merge(merge1,qus, on='tu_id', how = "left")
+# 	data = merge2[merge2["mapping_type"]=='in syllabus']
+# 	lo_dict = dict()
+# 	video_dict = dict()
+# 	tu_dict = dict()
+# 	goal_dict = dict()
+# 	chapter_dict = dict()
+# 	subject_dict = dict()
+	
+# 	# import pdb; pdb.set_trace()
+
+# 	for i in set(list(data["lo_id"])):
+# 		lo_dict[i] = {"lo_id":i,"lo_q_link":list(data[data["lo_id"]==i]["lo_q_link"])}
+
+# 	for j in set(list(data["video_id"])):
+# 		video_dict[j] = {"video_id":j,"video_name":str(set(data[data["video_id"]==j]["video_name"])),"video_link":data[data["video_id"]==j]["yt_link"].to_string(index=False)}
+
+# 	for k in set(list(data["tu_id"])):
+# 		tu_dict[k] = {"tu_id":k,"tu_name":str(set(data[data["tu_id"]==j]["tu_name"])),"video_details":[video_dict[x] for x in set(list(data[data["tu_id"]==k]["video_id"]))],"lo_details":[lo_dict[x] for x in set(list(data[data["tu_id"]==k]["lo_id"]))]}
+
+# 	for l in set(list(data["goal_id"])):
+# 		goal_dict[l] = {"goal_id":l,"goal_name":str(set(data[data["goal_id"]==l]["goal_name"])),"tu_details":[tu_dict[x] for x in set(list(data[data["goal_id"]==l]["tu_id"]))]}
+
+# 	for m in set(list(data["chapter_id"])):
+# 		chapter_dict[m] = {"chapter_id":m,"chapter_name":str(list(set(data[data["chapter_id"]==m]["chapter_name"]))),"goal_details":[goal_dict[x] for x in set(list(data[data["chapter_id"]==m]["goal_id"]))]}
+
+# 	for n in set(list(data["subject_name"])):
+# 		subject_dict[n] = {"subject_name":n,"chapter_details":[chapter_dict[x] for x in set(list(data[data["subject_name"]==n]["chapter_id"]))]}
+
+# 	return render(request,'goal.html',{"map":subject_dict})
 
 
 
+# def tu(request):
 
-def chapter(request):
-	mapping = pd.read_csv('./media/test.csv')
-	video = pd.read_csv('./media/tu_video.csv')
-	qus = pd.read_csv('./media/tu_lo.csv')
-	merge1 = pd.merge(mapping,video, on='tu_id')
-	merge2 = pd.merge(merge1,qus, on='tu_id')
+# 	mapping = pd.read_csv('./media/mapping.csv')
+# 	video = pd.read_csv('./media/tu_video.csv')
+# 	qus = pd.read_csv('./media/tu_lo.csv')
+# 	merge1 = pd.merge(mapping,video, on='tu_id')
+# 	merge2 = pd.merge(merge1,qus, on='tu_id', how = "left")
+# 	data = merge2[merge2["mapping_type"]=='in syllabus']
+# 	lo_dict = dict()
+# 	video_dict = dict()
+# 	tu_dict = dict()
+# 	goal_dict = dict()
+# 	chapter_dict = dict()
+# 	subject_dict = dict()
+	
+# 	# import pdb; pdb.set_trace()
 
-	j = (merge2.groupby(['subject_id','subject_name','chapter_id','chpater_name','goal_id','goal_name','tu_id','tu_name',], as_index=False)
-         .apply(lambda x: x[['video_id','video_name','yt_link','lo_id','lo_q_link']].to_dict('r'))
-         .reset_index()
-         .rename(columns={0:'id'}))
+# 	for i in set(list(data["lo_id"])):
+# 		lo_dict[i] = {"lo_id":i,"lo_q_link":list(data[data["lo_id"]==i]["lo_q_link"])}
 
-# preformattedJson = JSON.stringify(j, null, 2)
-	return render(request,'chapter.html')
+# 	for j in set(list(data["video_id"])):
+# 		video_dict[j] = {"video_id":j,"video_name":str(set(data[data["video_id"]==j]["video_name"])),"video_link":data[data["video_id"]==j]["yt_link"].to_string(index=False)}
+
+# 	for k in set(list(data["tu_id"])):
+# 		tu_dict[k] = {"tu_id":k,"tu_name":str(set(data[data["tu_id"]==j]["tu_name"])),"video_details":[video_dict[x] for x in set(list(data[data["tu_id"]==k]["video_id"]))],"lo_details":[lo_dict[x] for x in set(list(data[data["tu_id"]==k]["lo_id"]))]}
+
+# 	for l in set(list(data["goal_id"])):
+# 		goal_dict[l] = {"goal_id":l,"goal_name":str(set(data[data["goal_id"]==l]["goal_name"])),"tu_details":[tu_dict[x] for x in set(list(data[data["goal_id"]==l]["tu_id"]))]}
+
+# 	for m in set(list(data["chapter_id"])):
+# 		chapter_dict[m] = {"chapter_id":m,"chapter_name":str(list(set(data[data["chapter_id"]==m]["chapter_name"]))),"goal_details":[goal_dict[x] for x in set(list(data[data["chapter_id"]==m]["goal_id"]))]}
+
+# 	for n in set(list(data["subject_name"])):
+# 		subject_dict[n] = {"subject_name":n,"chapter_details":[chapter_dict[x] for x in set(list(data[data["subject_name"]==n]["chapter_id"]))]}
+
+# 	return render(request,'tu.html',{"map":subject_dict})
 
 
+# def question(request):
 
 
+# 	mapping = pd.read_csv('./media/mapping.csv')
+# 	video = pd.read_csv('./media/tu_video.csv')
+# 	qus = pd.read_csv('./media/tu_lo.csv')
+# 	merge1 = pd.merge(mapping,video, on='tu_id')
+# 	merge2 = pd.merge(merge1,qus, on='tu_id', how = "left")
+# 	data = merge2[merge2["mapping_type"]=='in syllabus']
+# 	lo_dict = dict()
+# 	video_dict = dict()
+# 	tu_dict = dict()
+# 	goal_dict = dict()
+# 	chapter_dict = dict()
+# 	subject_dict = dict()
+	
+# 	# import pdb; pdb.set_trace()
 
+# 	for i in set(list(data["lo_id"])):
+# 		lo_dict[i] = {"lo_id":i,"lo_q_link":list(data[data["lo_id"]==i]["lo_q_link"])}
 
+# 	for j in set(list(data["video_id"])):
+# 		video_dict[j] = {"video_id":j,"video_name":str(set(data[data["video_id"]==j]["video_name"])),"video_link":data[data["video_id"]==j]["yt_link"].to_string(index=False)}
 
-def goal(request):
-	return render(request,'goal.html',{})
+# 	for k in set(list(data["tu_id"])):
+# 		tu_dict[k] = {"tu_id":k,"tu_name":str(set(data[data["tu_id"]==j]["tu_name"])),"video_details":[video_dict[x] for x in set(list(data[data["tu_id"]==k]["video_id"]))],"lo_details":[lo_dict[x] for x in set(list(data[data["tu_id"]==k]["lo_id"]))]}
 
+# 	for l in set(list(data["goal_id"])):
+# 		goal_dict[l] = {"goal_id":l,"goal_name":str(set(data[data["goal_id"]==l]["goal_name"])),"tu_details":[tu_dict[x] for x in set(list(data[data["goal_id"]==l]["tu_id"]))]}
 
+# 	for m in set(list(data["chapter_id"])):
+# 		chapter_dict[m] = {"chapter_id":m,"chapter_name":str(list(set(data[data["chapter_id"]==m]["chapter_name"]))),"goal_details":[goal_dict[x] for x in set(list(data[data["chapter_id"]==m]["goal_id"]))]}
 
-def question(request):
-	return render(request,'question.html',{})
+# 	for n in set(list(data["subject_name"])):
+# 		subject_dict[n] = {"subject_name":n,"chapter_details":[chapter_dict[x] for x in set(list(data[data["subject_name"]==n]["chapter_id"]))]}
+
+# 	return render(request,'question.html',{"map":subject_dict})
 
 
 # def upload(request):

@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!-- <script type="text/javascript"  src="{{ static_root }}/main.js"></script> -->
+  <script type="text/javascript"  src="{% static 'main.js' %}"></script>
+
+
+
 </head>
 <body>
 
@@ -22,6 +27,7 @@
       <li><a href="/subject/">Subjects</a></li>
       <li><a href="/chapter/">Chapters</a></li>
       <li><a href="/goal/">Goals</a></li>
+      <li><a href="/tu/">TU</a></li>
       <li><a href="/question/">Questions</a></li>
     </ul>
   </div>
@@ -30,12 +36,13 @@
 <div class="container">
   <h3>TU Project QA Platform</h3>
   <p>A navigation bar is a navigation header that is placed at the top of the page.</p>
+  {% block content %}
+
+
+  {% endblock %}
 </div>
 
-{% block content %}
 
-
-{% endblock %}
 
 </body>
 </html>

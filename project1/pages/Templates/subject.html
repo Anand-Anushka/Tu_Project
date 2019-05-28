@@ -1,29 +1,25 @@
-
 {% extends 'base.html'%}
-
 {% block content %}
 
+<div class="home">Home</div>
+<div class="subject-container" data-values="{{map}}">
+		<div class="subject" data-value="">
+			<div class="subjet-title"></div>	
+		</div>
+</div>
 
-It's Subject Page!
+<div class="chapterlist-container"></div>
 
+<div class="goallist-container"></div>
+<div class="tulist-container"></div>
 
-
-<hr width="5"></hr>
-<style>
+<!-- <div class="goallist-container" data-value = "{{map}}">
+	<div class="chaptert" data-value="">
+			<div class="chapter-title"></div>	
+		</div>	
 	
-p.ex1 {
-  /*border: 1px solid red; */
-  padding-left: 50px;
-}
-</style>
 
-
-
-{{map}}
-
-<hr width="5"></hr>
-
-
+</div> -->
 
 
 {% endblock %}
