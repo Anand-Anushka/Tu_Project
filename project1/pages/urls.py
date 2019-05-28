@@ -5,8 +5,8 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-  path('',views.home,name='home'),
-  path('upload/',views.upload_file,name='simple_upload'),
+  path('',views.upload_file,name='home'),
+  # path('upload/',views.upload_file,name='simple_upload'),
   path('subject/',views.subject,name='subject'),
   # url(r'^chapter/(?P<subject_name>[\w-]+)/$', views.chapter, name='urlname'),
   # path('goal/',views.goal,name='goal'),
