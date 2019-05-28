@@ -1,0 +1,14 @@
+.all-titles{
+	font-size: 26px;
+	font-weight: bold;
+}
+.subject-container{
+	float: left;
+	width: 100%;
+}
+.subject{
+	float: left;
+	width: 100%;
+	padding: 20px;
+	cursor: pointer;
+}
