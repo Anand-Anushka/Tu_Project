@@ -19,8 +19,8 @@ import logging
 # from .forms import UploadFileForm
 # from somewhere import handle_uploaded_file
 
-def home(request):
-	return render(request,'home.html',{})
+# def home(request):
+# 	return render(request,'home.html',{})
 
 
 

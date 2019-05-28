@@ -27,6 +27,7 @@ $(document).ready(function(){
 
 	function setupSubjectList(alldata) {
 
+		subjectListPage.html("")
 		// console.log(alldata)
 
 		for (var i = 0; i < Object.keys(alldata).length; i++) {
@@ -84,9 +85,11 @@ $(document).ready(function(){
 
 	function setupGoalList(chapter_div){
 
+		goalListPage.html("");
+
 		var goaldata = JSON.parse(chapter_div.attr("data-value"));
 
-		goalListPage.html("");
+		
 
 		for(var i = 0; i < goaldata.length; i++){
 			var element = 	$('<div/>', {
